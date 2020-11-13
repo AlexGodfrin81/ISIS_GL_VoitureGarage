@@ -28,7 +28,10 @@ public class Voiture {
 	 * @throws java.lang.Exception Si déjà dans un garage
 	 */
 	public void entreAuGarage(Garage g) throws Exception {
-		// Et si la voiture est déjà dans un garage ?
+		if (this.estDansUnGarage()){
+                    throw new Exception("La voiture doit sortir de son garage "
+                            + "actuel avant de pouvoir rentrer dans un autre");
+                }
 		Stationnement s = new Stationnement(this, g);
 		myStationnements.add(s);
 	}
@@ -40,7 +43,11 @@ public class Voiture {
 	 * @throws java.lang.Exception si la voiture n'est pas dans un garage
 	 */
 	public void sortDuGarage() throws Exception {
-		throw new UnsupportedOperationException("Pas encore implémenté");
+                if (!this.estDansUnGarage()){
+                    throw new Exception("La voiture doit être dans un garage"
+                            + "pour pouvoir en sortir");
+                }
+		myStationnements.get(myStationnements.size()-1).terminer();
 		// TODO: Implémenter cette méthode
 		// Trouver le dernier stationnement de la voiture
 		// Terminer ce stationnement
@@ -50,8 +57,11 @@ public class Voiture {
 	 * @return l'ensemble des garages visités par cette voiture
 	 */
 	public Set<Garage> garagesVisites() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		Set<Garage> s = new HashSet<>();
+                for (Stationnement g : myStationnements){
+                    s.add(g.getGarage());
+                }
+                return s;
 	}
 
 	/**
@@ -59,7 +69,8 @@ public class Voiture {
 	 */
 	public boolean estDansUnGarage() {
 		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+                int x = myStationnements.size();
+                return (x != 0 && myStationnements.get(x-1).estEnCours());
 		// Vrai si le dernier stationnement est en cours
 	}
 
@@ -79,7 +90,7 @@ public class Voiture {
 	 */
 	public void imprimeStationnements(PrintStream out) {
 		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		//throw new UnsupportedOperationException("Pas encore implémenté");
 	}
 
 }

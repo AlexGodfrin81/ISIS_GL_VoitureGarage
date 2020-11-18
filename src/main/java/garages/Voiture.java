@@ -89,8 +89,20 @@ public class Voiture {
 	 * @param out l'endroit où imprimer (ex: System.out)
 	 */
 	public void imprimeStationnements(PrintStream out) {
-		// TODO: Implémenter cette méthode
-		//throw new UnsupportedOperationException("Pas encore implémenté");
+                String res = "";
+                for (Stationnement g : myStationnements){
+                    String a = "";
+                    if (!res.trim().contains(g.getGarage().toString())){
+                        a = g.getGarage().toString()+": \n";
+                        for (Stationnement f : myStationnements){
+                            if (f.getGarage()==g.getGarage()){
+                                a += f.toString();
+                            }
+                        }
+                        res += a+"\n";
+                    }
+                }
+                out.println(res);
 	}
 
 }
